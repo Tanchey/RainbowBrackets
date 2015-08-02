@@ -11,7 +11,6 @@
 		587219461B6E5FF400D1475E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 587219451B6E5FF400D1475E /* Foundation.framework */; };
 		5872194B1B6E5FF400D1475E /* RainbowBrackets.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 5872194A1B6E5FF400D1475E /* RainbowBrackets.xcscheme */; };
 		5872194E1B6E5FF400D1475E /* RainbowBrackets.m in Sources */ = {isa = PBXBuildFile; fileRef = 5872194D1B6E5FF400D1475E /* RainbowBrackets.m */; };
-		587219511B6E5FF400D1475E /* NSObject_Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 587219501B6E5FF400D1475E /* NSObject_Extension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,8 +21,6 @@
 		5872194A1B6E5FF400D1475E /* RainbowBrackets.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = RainbowBrackets.xcscheme; path = RainbowBrackets.xcodeproj/xcshareddata/xcschemes/RainbowBrackets.xcscheme; sourceTree = SOURCE_ROOT; };
 		5872194C1B6E5FF400D1475E /* RainbowBrackets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RainbowBrackets.h; sourceTree = "<group>"; };
 		5872194D1B6E5FF400D1475E /* RainbowBrackets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RainbowBrackets.m; sourceTree = "<group>"; };
-		5872194F1B6E5FF400D1475E /* NSObject_Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSObject_Extension.h; sourceTree = "<group>"; };
-		587219501B6E5FF400D1475E /* NSObject_Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSObject_Extension.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +67,6 @@
 			children = (
 				5872194C1B6E5FF400D1475E /* RainbowBrackets.h */,
 				5872194D1B6E5FF400D1475E /* RainbowBrackets.m */,
-				5872194F1B6E5FF400D1475E /* NSObject_Extension.h */,
-				587219501B6E5FF400D1475E /* NSObject_Extension.m */,
 				587219481B6E5FF400D1475E /* Supporting Files */,
 			);
 			path = RainbowBrackets;
@@ -154,7 +149,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5872194E1B6E5FF400D1475E /* RainbowBrackets.m in Sources */,
-				587219511B6E5FF400D1475E /* NSObject_Extension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
