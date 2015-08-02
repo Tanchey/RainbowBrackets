@@ -11,6 +11,8 @@
 		587219461B6E5FF400D1475E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 587219451B6E5FF400D1475E /* Foundation.framework */; };
 		5872194B1B6E5FF400D1475E /* RainbowBrackets.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 5872194A1B6E5FF400D1475E /* RainbowBrackets.xcscheme */; };
 		5872194E1B6E5FF400D1475E /* RainbowBrackets.m in Sources */ = {isa = PBXBuildFile; fileRef = 5872194D1B6E5FF400D1475E /* RainbowBrackets.m */; };
+		58E3F41B1B6E738A00B4664C /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E3F4191B6E738A00B4664C /* DVTFoundation.framework */; };
+		58E3F41C1B6E738A00B4664C /* DVTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58E3F41A1B6E738A00B4664C /* DVTKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,9 @@
 		5872194A1B6E5FF400D1475E /* RainbowBrackets.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = RainbowBrackets.xcscheme; path = RainbowBrackets.xcodeproj/xcshareddata/xcschemes/RainbowBrackets.xcscheme; sourceTree = SOURCE_ROOT; };
 		5872194C1B6E5FF400D1475E /* RainbowBrackets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RainbowBrackets.h; sourceTree = "<group>"; };
 		5872194D1B6E5FF400D1475E /* RainbowBrackets.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RainbowBrackets.m; sourceTree = "<group>"; };
+		587219571B6E608C00D1475E /* DVTInterfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVTInterfaces.h; sourceTree = "<group>"; };
+		58E3F4191B6E738A00B4664C /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = ../../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<group>"; };
+		58E3F41A1B6E738A00B4664C /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTKit.framework; path = ../../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +35,8 @@
 			files = (
 				587219441B6E5FF400D1475E /* AppKit.framework in Frameworks */,
 				587219461B6E5FF400D1475E /* Foundation.framework in Frameworks */,
+				58E3F41C1B6E738A00B4664C /* DVTKit.framework in Frameworks */,
+				58E3F41B1B6E738A00B4664C /* DVTFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +63,8 @@
 		587219421B6E5FF400D1475E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58E3F4191B6E738A00B4664C /* DVTFoundation.framework */,
+				58E3F41A1B6E738A00B4664C /* DVTKit.framework */,
 				587219431B6E5FF400D1475E /* AppKit.framework */,
 				587219451B6E5FF400D1475E /* Foundation.framework */,
 			);
@@ -67,6 +76,7 @@
 			children = (
 				5872194C1B6E5FF400D1475E /* RainbowBrackets.h */,
 				5872194D1B6E5FF400D1475E /* RainbowBrackets.m */,
+				587219571B6E608C00D1475E /* DVTInterfaces.h */,
 				587219481B6E5FF400D1475E /* Supporting Files */,
 			);
 			path = RainbowBrackets;
@@ -232,6 +242,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
+				);
 				INFOPLIST_FILE = RainbowBrackets/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -246,6 +260,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "$(HOME)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
+				);
 				INFOPLIST_FILE = RainbowBrackets/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -273,6 +291,7 @@
 				587219561B6E5FF400D1475E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
