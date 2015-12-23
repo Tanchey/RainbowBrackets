@@ -57,7 +57,7 @@ static NSString *const plyUserDefaultsRainbowBlocksEnabledKey = @"plyUserDefault
     return sharedPlugin;
 }
 
-- (void)didApplicationFinishLaunchingNotification:(NSNotification*)notification
+- (void)didApplicationFinishLaunchingNotification:(NSNotification *)notification
 {
     //removeObserver
     [[NSNotificationCenter defaultCenter] removeObserver: self

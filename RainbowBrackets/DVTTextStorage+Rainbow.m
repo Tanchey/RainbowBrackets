@@ -34,7 +34,8 @@
                                 swizzledSelector,
                                 method_getImplementation(originalMethod),
                                 method_getTypeEncoding(originalMethod));
-        } else {
+        }
+        else {
             method_exchangeImplementations(originalMethod, swizzledMethod);
         }
     });
@@ -89,13 +90,17 @@
     }
     if ([[RainbowBrackets sharedPlugin] rainbowBlocksEnabled]) {
         if ([self _isItemBlockExpression: item]) {
-            if ([self needPaintItem: item
-                            inRange: newRange
-                            atIndex: index
-                            asOneOf: @"{\n}"]) {
+            NSString *string = [[self stringForItem: item] substringFromIndex: index - newRange.location];
+            if ([string hasPrefix:@"{"]) {
                 *effectiveRange = (NSRange){index, 1};
                 return item.rainbowColor;
             }
+            else {
+                NSLog(@"%@", string);
+                *effectiveRange = (NSRange){newRange.location + newRange.length - 1, 1};
+                return item.rainbowColor;
+            }
+
         }
     }
 
@@ -135,7 +140,7 @@ NSColor *rainbow_colorForParenLevel(unsigned level)
     CGFloat hueValue = (CGFloat)rainbow_prerandomized(level)/16.0f;
     return [NSColor colorWithCalibratedHue: hueValue
                                 saturation: 1
-                                brightness: 1
+                                brightness: 0.7
                                      alpha: 1];
 }
 
