@@ -103,6 +103,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 587219541B6E5FF400D1475E /* Build configuration list for PBXNativeTarget "RainbowBrackets" */;
 			buildPhases = (
+				58D7DCA11C1FFD00007DC2EF /* ShellScript */,
 				5872193C1B6E5FF400D1475E /* Sources */,
 				5872193D1B6E5FF400D1475E /* Resources */,
 				5872193E1B6E5FF400D1475E /* Frameworks */,
@@ -157,6 +158,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		58D7DCA11C1FFD00007DC2EF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n# show Xcode version and UUID\nxcodebuild -version\nuuid=$(defaults read /Applications/Xcode.app/Contents/Info DVTPlugInCompatibilityUUID)\necho \"UUID $uuid\"\necho \"\"\n\n# check UUID\nplist=$(pwd)/RainbowBrackets/Info.plist\nif [ -n \"$(defaults read \"$plist\" | grep $uuid)\" ] ; then\necho \"UUID is already added to $plist\"\nexit\nfi\n\n# add UUID to .plist\necho \"Add UUID to $plist\"\ndefaults write \"$plist\" DVTPlugInCompatibilityUUIDs -array-add $uuid\n\n# show the result\ndefaults read \"$plist\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5872193C1B6E5FF400D1475E /* Sources */ = {
