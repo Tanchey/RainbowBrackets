@@ -2,8 +2,7 @@
 #import "DVTTextStorage+Rainbow.h"
 #import "RainbowBrackets.h"
 #import "DVTSourceModelItem+RainbowColor.h"
-
-#import <objc/runtime.h>
+#import "RainbowSwizzler.h"
 
 
 @implementation DVTTextStorage (Rainbow)
@@ -14,34 +13,13 @@ static NSCharacterSet *whitespacesAndSemicolon = nil;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class class = [self class];
-
-        SEL originalSelector = @selector(colorAtCharacterIndex:effectiveRange:context:);
-        SEL swizzledSelector = @selector(rainbow_colorAtCharacterIndex:effectiveRange:context:);
-
-        Method originalMethod = class_getInstanceMethod(class, originalSelector);
-        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-
-        BOOL didAddMethod =
-        class_addMethod(class,
-                        originalSelector,
-                        method_getImplementation(swizzledMethod),
-                        method_getTypeEncoding(swizzledMethod));
-
-        if (didAddMethod) {
-            class_replaceMethod(class,
-                                swizzledSelector,
-                                method_getImplementation(originalMethod),
-                                method_getTypeEncoding(originalMethod));
-        }
-        else {
-            method_exchangeImplementations(originalMethod, swizzledMethod);
-        }
-
         NSMutableCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet].mutableCopy;
         [set addCharactersInString: @";"];
         whitespacesAndSemicolon = set.copy;
     });
+    swizzleInstanceMethod([self class],
+                          @selector(colorAtCharacterIndex:effectiveRange:context:),
+                          @selector(rainbow_colorAtCharacterIndex:effectiveRange:context:));
 }
 
 

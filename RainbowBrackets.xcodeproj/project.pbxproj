@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		583150B41CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 583150B31CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.m */; };
+		583150B71CA683C200B19D2A /* RainbowSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 583150B61CA683C200B19D2A /* RainbowSwizzler.m */; };
 		584355241B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.m in Sources */ = {isa = PBXBuildFile; fileRef = 584355231B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.m */; };
 		587219441B6E5FF400D1475E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 587219431B6E5FF400D1475E /* AppKit.framework */; };
 		587219461B6E5FF400D1475E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 587219451B6E5FF400D1475E /* Foundation.framework */; };
@@ -20,6 +21,8 @@
 /* Begin PBXFileReference section */
 		583150B21CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTSourceModelItem+RainbowColor.h"; sourceTree = "<group>"; };
 		583150B31CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTSourceModelItem+RainbowColor.m"; sourceTree = "<group>"; };
+		583150B51CA683C200B19D2A /* RainbowSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RainbowSwizzler.h; sourceTree = "<group>"; };
+		583150B61CA683C200B19D2A /* RainbowSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RainbowSwizzler.m; sourceTree = "<group>"; };
 		584355221B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextStorage+Rainbow.h"; sourceTree = "<group>"; };
 		584355231B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DVTTextStorage+Rainbow.m"; sourceTree = "<group>"; };
 		587219401B6E5FF400D1475E /* RainbowBrackets.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RainbowBrackets.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +88,7 @@
 				587219571B6E608C00D1475E /* DVTInterfaces.h */,
 				584355221B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.h */,
 				584355231B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.m */,
+				58CCF4321CA6FEA200BDA221 /* Helpers */,
 				587219481B6E5FF400D1475E /* Supporting Files */,
 				583150B21CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.h */,
 				583150B31CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.m */,
@@ -99,6 +103,15 @@
 				5872194A1B6E5FF400D1475E /* RainbowBrackets.xcscheme */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		58CCF4321CA6FEA200BDA221 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				583150B51CA683C200B19D2A /* RainbowSwizzler.h */,
+				583150B61CA683C200B19D2A /* RainbowSwizzler.m */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				584355241B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.m in Sources */,
+				583150B71CA683C200B19D2A /* RainbowSwizzler.m in Sources */,
 				583150B41CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.m in Sources */,
 				5872194E1B6E5FF400D1475E /* RainbowBrackets.m in Sources */,
 			);
