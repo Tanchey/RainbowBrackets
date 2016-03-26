@@ -100,13 +100,10 @@
 				5872194C1B6E5FF400D1475E /* RainbowBrackets.h */,
 				5872194D1B6E5FF400D1475E /* RainbowBrackets.m */,
 				587219571B6E608C00D1475E /* DVTInterfaces.h */,
-				584355221B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.h */,
-				584355231B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.m */,
 				583150B81CA6934700B19D2A /* Rainbow colorizers */,
+				58CCF4311CA6FE6D00BDA221 /* Categories on DVT */,
 				58CCF4321CA6FEA200BDA221 /* Helpers */,
 				587219481B6E5FF400D1475E /* Supporting Files */,
-				583150B21CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.h */,
-				583150B31CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.m */,
 			);
 			path = RainbowBrackets;
 			sourceTree = "<group>";
@@ -118,6 +115,17 @@
 				5872194A1B6E5FF400D1475E /* RainbowBrackets.xcscheme */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		58CCF4311CA6FE6D00BDA221 /* Categories on DVT */ = {
+			isa = PBXGroup;
+			children = (
+				583150B21CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.h */,
+				583150B31CA67EBF00B19D2A /* DVTSourceModelItem+RainbowColor.m */,
+				584355221B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.h */,
+				584355231B6E6AA500ED6E97 /* DVTTextStorage+Rainbow.m */,
+			);
+			name = "Categories on DVT";
 			sourceTree = "<group>";
 		};
 		58CCF4321CA6FEA200BDA221 /* Helpers */ = {
