@@ -319,6 +319,9 @@
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = RainbowBrackets/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -337,6 +340,9 @@
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = RainbowBrackets/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
