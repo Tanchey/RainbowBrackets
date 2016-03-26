@@ -1,6 +1,8 @@
 
 #import <AppKit/AppKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class RainbowBrackets;
 
 @interface RainbowBrackets : NSObject
@@ -8,9 +10,7 @@
 + (instancetype)sharedPlugin;
 - (id)initWithBundle:(NSBundle *)plugin;
 
-- (BOOL)rainbowBracketsEnabled;
-- (BOOL)rainbowParenEnabled;
-- (BOOL)rainbowBlocksEnabled;
-
 @property (nonatomic, strong, readonly) NSBundle* bundle;
 @end
+
+NS_ASSUME_NONNULL_END

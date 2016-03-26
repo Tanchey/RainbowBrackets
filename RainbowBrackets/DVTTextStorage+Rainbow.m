@@ -1,88 +1,56 @@
 
 #import "DVTTextStorage+Rainbow.h"
-#import "RainbowBrackets.h"
 #import "DVTSourceModelItem+RainbowColor.h"
 #import "RainbowSwizzler.h"
+
+#import "RainbowColorizersManager.h"
+#import "RainbowColorizer.h"
 
 
 @implementation DVTTextStorage (Rainbow)
 
-static NSCharacterSet *whitespacesAndSemicolon = nil;
-
 + (void)load
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet].mutableCopy;
-        [set addCharactersInString: @";"];
-        whitespacesAndSemicolon = set.copy;
-    });
     swizzleInstanceMethod([self class],
                           @selector(colorAtCharacterIndex:effectiveRange:context:),
                           @selector(rainbow_colorAtCharacterIndex:effectiveRange:context:));
 }
 
 
-- (BOOL)needPaintItem:(DVTSourceModelItem *)item
-              inRange:(NSRange)range
-              atIndex:(unsigned long long)index
-              asOneOf:(NSString *)symbols
+- (NSColor *)rainbow_colorAtCharacterIndex:(unsigned long long)characterIndex
+                            effectiveRange:(NSRangePointer)effectiveRange
+                                   context:(id)context
 {
-    NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString: symbols];
-    NSString *string = [self.sourceModelService stringForItem: item];
+    NSColor *color = [self rainbow_colorAtCharacterIndex:characterIndex
+                                          effectiveRange:effectiveRange
+                                                 context:context];
 
-    if ([charSet characterIsMember: [string characterAtIndex: index - range.location]]) {
-        return YES;
-    }
-    return NO;
-}
+    NSRange range = *effectiveRange;
+
+    DVTSourceModelItem *item = [self.sourceModelService sourceModelItemAtCharacterIndex:range.location];
 
 
-- (NSColor *)rainbow_colorAtCharacterIndex:(unsigned long long)index
-                            effectiveRange:(NSRangePointer)effectiveRange context:(id)context
-{
-    NSColor *originalColor = [self rainbow_colorAtCharacterIndex: index effectiveRange: effectiveRange context: context];
+    BOOL (^predicateBlock)(id, id _Nullable) =
+    ^BOOL(id<RainbowColorizer> colorizer, __unused id _Nullable bindings) {
+        return [colorizer tokenFilter](self, item);
+    };
 
-    NSRange newRange = *effectiveRange;
+    id<RainbowColorizer> colorizer = [[RainbowColorizersManager enabledColorizers]
+                                      filteredArrayUsingPredicate:
+                                      [NSPredicate predicateWithBlock:predicateBlock]].firstObject;
 
-    DVTSourceModelItem *item = [self.sourceModelService sourceModelItemAtCharacterIndex: newRange.location];
+    NSString *string = [self.sourceModelService stringForItem:item];
+    unsigned long long localIndex = characterIndex - range.location;
 
-    if ([[RainbowBrackets sharedPlugin] rainbowBracketsEnabled])  {
-        if ([self _isItemBracketExpression: item]) {
-            if ([self needPaintItem: item
-                            inRange: newRange
-                            atIndex: index
-                            asOneOf: @"[:]"]) {
-                *effectiveRange = (NSRange){index, 1};
-                originalColor = item.rainbowColor;
-            }
-        }
-    }
-    if ([[RainbowBrackets sharedPlugin] rainbowParenEnabled]) {
-        if ([self _isItemParenExpression: item]) {
-            if ([self needPaintItem: item
-                            inRange: newRange
-                            atIndex: index
-                            asOneOf: @"(*^ )"]) {
-                *effectiveRange = (NSRange){index, 1};
-                originalColor = item.rainbowColor;
-            }
-        }
-    }
-    if ([[RainbowBrackets sharedPlugin] rainbowBlocksEnabled]) {
-        if ([self _isItemBlockExpression: item]) {
-            NSString *string = [[self stringForItem: item] substringFromIndex: index - newRange.location];
-            if ([string hasPrefix:@"{"]) {
-                *effectiveRange = (NSRange){index, 1};
-                originalColor = item.rainbowColor;
-            }
-            else if ([[string stringByTrimmingCharactersInSet:whitespacesAndSemicolon] isEqualToString:@"}"]) {
-                originalColor = item.rainbowColor;
-            }
-        }
+    NSRange rangeToColor = [colorizer paintCharacterAtIndex:localIndex
+                                                   ofString:string];
+    if (rangeToColor.location != NSNotFound &&
+        rangeToColor.length > 0) {
+        color = item.rainbowColor;
+        *effectiveRange = NSMakeRange(range.location + rangeToColor.location, rangeToColor.length);
     }
 
-    return originalColor;
+    return color;
 }
 
 @end

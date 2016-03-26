@@ -1,22 +1,17 @@
 
 #import "RainbowBrackets.h"
+#import "RainbowColorizer.h"
+#import "RainbowColorizersManager.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface RainbowBrackets ()
 
 @property (nonatomic, strong, readwrite) NSBundle *bundle;
-
-@property (nonatomic, strong) NSMenuItem *enableRainbowBrackets;
-@property (nonatomic, strong) NSMenuItem *enableRainbowParen;
-@property (nonatomic, strong) NSMenuItem *enableRainbowBlocks;
-
 @end
 
-static NSString *const plyUserDefaultsRainbowBracketsEnabledKey = @"plyUserDefaultsRainbowBracketsEnabledKey";
-static NSString *const plyUserDefaultsRainbowParenEnabledKey = @"plyUserDefaultsRainbowParenEnabledKey";
-static NSString *const plyUserDefaultsRainbowBlocksEnabledKey = @"plyUserDefaultsRainbowBlocksEnabledKey";
-
 @interface RBWMenuItem : NSMenuItem
-@property (nonatomic, copy) NSString *rbw_identifier;
+@property (nonatomic) id<RainbowColorizer> rainbowColorizer;
 @end
 
 
@@ -71,10 +66,13 @@ static NSString *const plyUserDefaultsRainbowBlocksEnabledKey = @"plyUserDefault
 
 - (void)toggleEnabled:(RBWMenuItem *)sender
 {
-    NSString *key = [sender rbw_identifier];
-    BOOL newValue = ![[NSUserDefaults standardUserDefaults] boolForKey: key];
-    [[NSUserDefaults standardUserDefaults] setBool: newValue forKey: key];
+    id<RainbowColorizer> colorizer = [sender rainbowColorizer];
+    BOOL newValue = NO == [[NSUserDefaults standardUserDefaults] boolForKey: [colorizer userDefaultsKey]];
+    [[NSUserDefaults standardUserDefaults] setBool: newValue forKey: [colorizer userDefaultsKey]];
 
+    if ([colorizer isEnabled] != newValue) {
+        [colorizer toggleEnabled];
+    }
     [sender setState: newValue ? NSOnState : NSOffState];
 }
 
@@ -99,24 +97,23 @@ static NSString *const plyUserDefaultsRainbowBlocksEnabledKey = @"plyUserDefault
 }
 
 
-- (NSMenuItem *)addItemWithTitle:(NSString *)title
-                   keyEquivalent:(NSString *)keyEquivalent
-                          action:(SEL)action
-                          toMenu:(NSMenu *)menu
-                 userDefaultsKey:(NSString *)key
+- (NSMenuItem *)addItemForColorizer:(id<RainbowColorizer>)colorizer
+                             action:(SEL)action
+                             toMenu:(NSMenu *)menu
 {
-    RBWMenuItem *item = [[RBWMenuItem alloc] initWithTitle: title
+    RBWMenuItem *item = [[RBWMenuItem alloc] initWithTitle: [colorizer title]
                                                     action: action
-                                             keyEquivalent: keyEquivalent];
+                                             keyEquivalent: [colorizer keyEquivalent]];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey: key])
-    {
-        [item setState: NSOnState];
+    BOOL enabled = [[NSUserDefaults standardUserDefaults] boolForKey: [colorizer userDefaultsKey]];
+    [item setState: enabled ? NSOnState : NSOffState];
+    if ([colorizer isEnabled] != enabled) {
+        [colorizer toggleEnabled];
     }
 
-    item.rbw_identifier = key;
+    item.rainbowColorizer = colorizer;
     item.target = self;
-    [menu addItem: item];
+    [menu addItem:item];
 
     return item;
 }
@@ -126,46 +123,16 @@ static NSString *const plyUserDefaultsRainbowBlocksEnabledKey = @"plyUserDefault
     NSMenu *rainbowMenu = [[NSMenu alloc] initWithTitle: @"Rainbow"];
     menuItem.submenu = rainbowMenu;
 
-    self.enableRainbowBrackets = [self addItemWithTitle: @"Enable rainbow brackets"
-                                          keyEquivalent: @"R"
-                                                 action: @selector(toggleEnabled:)
-                                                 toMenu: rainbowMenu
-                                        userDefaultsKey: plyUserDefaultsRainbowBracketsEnabledKey];
-
-    self.enableRainbowParen = [self addItemWithTitle: @"Enable rainbow parentheses"
-                                       keyEquivalent: @"P"
-                                              action: @selector(toggleEnabled:)
-                                              toMenu: rainbowMenu
-                                     userDefaultsKey: plyUserDefaultsRainbowParenEnabledKey];
-
-    self.enableRainbowBlocks = [self addItemWithTitle: @"Enable rainbow blocks"
-                                        keyEquivalent: @"B"
-                                               action: @selector(toggleEnabled:)
-                                               toMenu: rainbowMenu
-                                      userDefaultsKey: plyUserDefaultsRainbowBlocksEnabledKey];
-}
-
-- (BOOL)rainbowBracketsEnabled
-{
-    return [[NSUserDefaults standardUserDefaults] boolForKey: plyUserDefaultsRainbowBracketsEnabledKey];
-}
-
-- (BOOL)rainbowParenEnabled
-{
-    return [[NSUserDefaults standardUserDefaults] boolForKey: plyUserDefaultsRainbowParenEnabledKey];
-}
-
-- (BOOL)rainbowBlocksEnabled
-{
-    return [[NSUserDefaults standardUserDefaults] boolForKey: plyUserDefaultsRainbowBlocksEnabledKey];
-}
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-{
-    return YES;
+    for (id<RainbowColorizer> colorizer in [RainbowColorizersManager allColorizers]) {
+        [self addItemForColorizer:colorizer
+                           action:@selector(toggleEnabled:)
+                           toMenu:rainbowMenu];
+    }
 }
 
 @end
 
 @implementation RBWMenuItem
 @end
+
+NS_ASSUME_NONNULL_END
