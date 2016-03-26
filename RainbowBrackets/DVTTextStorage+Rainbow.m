@@ -8,6 +8,8 @@
 
 @implementation DVTTextStorage (Rainbow)
 
+static NSCharacterSet *whitespacesAndSemicolon = nil;
+
 + (void)load
 {
     static dispatch_once_t onceToken;
@@ -35,6 +37,10 @@
         else {
             method_exchangeImplementations(originalMethod, swizzledMethod);
         }
+
+        NSMutableCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet].mutableCopy;
+        [set addCharactersInString: @";"];
+        whitespacesAndSemicolon = set.copy;
     });
 }
 
@@ -63,14 +69,14 @@
 
     DVTSourceModelItem *item = [self.sourceModelService sourceModelItemAtCharacterIndex: newRange.location];
 
-    if ([[RainbowBrackets sharedPlugin] rainbowBracketsEnabled]) {
+    if ([[RainbowBrackets sharedPlugin] rainbowBracketsEnabled])  {
         if ([self _isItemBracketExpression: item]) {
             if ([self needPaintItem: item
                             inRange: newRange
                             atIndex: index
                             asOneOf: @"[:]"]) {
                 *effectiveRange = (NSRange){index, 1};
-                return item.rainbowColor;
+                originalColor = item.rainbowColor;
             }
         }
     }
@@ -81,7 +87,7 @@
                             atIndex: index
                             asOneOf: @"(*^ )"]) {
                 *effectiveRange = (NSRange){index, 1};
-                return item.rainbowColor;
+                originalColor = item.rainbowColor;
             }
         }
     }
@@ -90,14 +96,11 @@
             NSString *string = [[self stringForItem: item] substringFromIndex: index - newRange.location];
             if ([string hasPrefix:@"{"]) {
                 *effectiveRange = (NSRange){index, 1};
-                return item.rainbowColor;
+                originalColor = item.rainbowColor;
             }
-            else {
-                NSLog(@"%@", string);
-                *effectiveRange = (NSRange){newRange.location + newRange.length - 1, 1};
-                return item.rainbowColor;
+            else if ([[string stringByTrimmingCharactersInSet:whitespacesAndSemicolon] isEqualToString:@"}"]) {
+                originalColor = item.rainbowColor;
             }
-
         }
     }
 
