@@ -25,6 +25,7 @@
 - (NSColor*)colorAtCharacterIndex:(unsigned long long)charIndex effectiveRange:(NSRangePointer)range context:(id)context;
 - (id<DVTSourceLanguageSourceModelService>)sourceModelItemAtCharacterIndex:(unsigned long long)arg1; //DVTSourceTextStorage in Xcode 5, DVTSourceLanguageSourceModelService protocol in Xcode 5.1
 - (id)stringForItem:(id)arg1;
+- (void)fixSyntaxColoringInRange:(NSRange)arg1;
 - (BOOL)_isItemParenExpression:(id)arg1;
 - (BOOL)_isItemBlockExpression:(id)arg1;
 - (BOOL)_isItemBracketExpression:(id)arg1;

@@ -6,6 +6,10 @@
 #import "RainbowColorizersManager.h"
 #import "RainbowColorizer.h"
 
+BOOL rangeIsValid(NSRange range)
+{
+    return range.location < NSNotFound && range.length > 0;
+}
 
 @implementation DVTTextStorage (Rainbow)
 
@@ -44,10 +48,20 @@
 
     NSRange rangeToColor = [colorizer paintCharacterAtIndex:localIndex
                                                    ofString:string];
-    if (rangeToColor.location != NSNotFound &&
-        rangeToColor.length > 0) {
+    if (rangeIsValid(rangeToColor)) {
         color = item.rainbowColor;
         *effectiveRange = NSMakeRange(range.location + rangeToColor.location, rangeToColor.length);
+
+        NSRange rangeBefore = NSMakeRange(range.location, rangeToColor.location);
+        if (rangeIsValid(rangeBefore)) {
+            [self fixSyntaxColoringInRange:rangeBefore];
+        }
+
+        NSRange rangeAfter = NSMakeRange(range.location + rangeToColor.location + rangeToColor.length,
+                                         range.length - rangeToColor.location - rangeToColor.length);
+        if (rangeIsValid(rangeAfter)) {
+            [self fixSyntaxColoringInRange:rangeAfter];
+        }
     }
 
     return color;
