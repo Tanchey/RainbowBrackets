@@ -9,8 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
                 keyEqvivalent:(NSString * _Nullable)keyEquivalent
               userDefaultsKey:(NSString *)userDefaultsKey
                   tokenFilter:(RainbowColorizerTokenFilter)tokenFilter
-                      opening:(NSString *)opening
-                      closing:(NSString *)closing
+                      opening:(unichar)opening
+                      closing:(unichar)closing
        extraCharactersToPaint:(NSString *)charactersToPaint NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

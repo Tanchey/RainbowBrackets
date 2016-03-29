@@ -40,8 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
                                                        tokenFilter:^BOOL(id textStorage, id modelItem) {
                                                            return [textStorage _isItemBracketExpression:modelItem];
                                                        }
-                                                           opening:@"["
-                                                           closing:@"]"
+                                                           opening:'['
+                                                           closing:']'
                                             extraCharactersToPaint:@":;"],
 
 
@@ -51,8 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
                                                        tokenFilter:^BOOL(id textStorage, id modelItem) {
                                                            return [textStorage _isItemParenExpression:modelItem];
                                                        }
-                                                           opening:@"("
-                                                           closing:@")"
+                                                           opening:'('
+                                                           closing:')'
                                             extraCharactersToPaint:@"*^;:"],
 
 
@@ -62,8 +62,8 @@ NS_ASSUME_NONNULL_BEGIN
                                                        tokenFilter:^BOOL(id textStorage, id modelItem) {
                                                            return [textStorage _isItemBlockExpression:modelItem];
                                                        }
-                                                           opening:@"{"
-                                                           closing:@"}"
+                                                           opening:'{'
+                                                           closing:'}'
                                             extraCharactersToPaint:@";"]
                     ];
     return self;

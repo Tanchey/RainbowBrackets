@@ -15,8 +15,9 @@ typedef BOOL (^RainbowColorizerTokenFilter)(id textStorage, id modelItem);
 
 - (void)toggleEnabled;
 
-- (NSRange)paintCharacterAtIndex:(unsigned long long)characterIndex
-                        ofString:(NSString *)string;
+- (BOOL)needPaintCharacterAtGlobalIndex:(unsigned long long)globalIndex
+                               inString:(NSString *)string
+                     withEffectiveRange:(NSRange)range;
 
 @end
 

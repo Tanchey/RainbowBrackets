@@ -10,8 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *userDefaultsKey;
 @property (nonatomic, copy, readonly) RainbowColorizerTokenFilter tokenFilter;
 
-@property (nonatomic, copy, readonly) NSString *opening;
-@property (nonatomic, copy, readonly) NSString *closing;
+@property (nonatomic, readonly) unichar opening;
+@property (nonatomic, readonly) unichar closing;
 @property (nonatomic, copy, readonly) NSCharacterSet *extraCharactersToPaint;
 @end
 
@@ -21,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
                 keyEqvivalent:(NSString * _Nullable)keyEquivalent
               userDefaultsKey:(NSString *)userDefaultsKey
                   tokenFilter:(RainbowColorizerTokenFilter)tokenFilter
-                      opening:(NSString *)opening
-                      closing:(NSString *)closing
+                      opening:(unichar)opening
+                      closing:(unichar)closing
        extraCharactersToPaint:(NSString *)charactersToPaint
 {
     NSParameterAssert(title != nil);
@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
+
 - (instancetype)init
 {
     NSAssert1(NO, @"Unavailable. Use `%@`",
@@ -59,27 +60,31 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 
-
 - (void)toggleEnabled
 {
     self.enabled = NO == self.isEnabled;
 }
 
-- (NSRange)paintCharacterAtIndex:(unsigned long long)characterIndex
-                        ofString:(NSString *)string
+
+- (BOOL)needPaintCharacterAtGlobalIndex:(unsigned long long)globalIndex
+                               inString:(NSString *)string
+                     withEffectiveRange:(NSRange)range
 {
-    NSRange ret = NSMakeRange(NSNotFound, 0);
-    unichar character = [string characterAtIndex:characterIndex];
+    unsigned long long localIndex = globalIndex - range.location;
+    unichar character = [string characterAtIndex:localIndex];
 
-    NSString *substring = [string substringFromIndex:characterIndex];
-    if ([substring hasPrefix:self.opening]) {
-        ret = NSMakeRange(characterIndex, self.opening.length);
-    }
-    else if ([[substring stringByTrimmingCharactersInSet:self.extraCharactersToPaint] isEqualToString:self.closing]) {
-        ret = NSMakeRange(0, string.length);
+    if (character == self.opening || character == self.closing) {
+        return YES;
     }
 
-    return ret;
+    NSString *endingString = [string substringFromIndex:localIndex];
+    NSString *trimmed = [endingString stringByTrimmingCharactersInSet:self.extraCharactersToPaint];
+
+    if (trimmed.length == 1 && [trimmed characterAtIndex:trimmed.length - 1] == self.closing) {
+        return YES;
+    }
+
+    return NO;
 }
 
 @end

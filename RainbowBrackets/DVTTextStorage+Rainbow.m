@@ -6,11 +6,6 @@
 #import "RainbowColorizersManager.h"
 #import "RainbowColorizer.h"
 
-BOOL rangeIsValid(NSRange range)
-{
-    return range.location < NSNotFound && range.length > 0;
-}
-
 @implementation DVTTextStorage (Rainbow)
 
 + (void)load
@@ -43,25 +38,10 @@ BOOL rangeIsValid(NSRange range)
                                       filteredArrayUsingPredicate:
                                       [NSPredicate predicateWithBlock:predicateBlock]].firstObject;
 
-    NSString *string = [self.sourceModelService stringForItem:item];
-    unsigned long long localIndex = characterIndex - range.location;
-
-    NSRange rangeToColor = [colorizer paintCharacterAtIndex:localIndex
-                                                   ofString:string];
-    if (rangeIsValid(rangeToColor)) {
+    if ([colorizer needPaintCharacterAtGlobalIndex:characterIndex
+                                          inString:[self.sourceModelService stringForItem:item]
+                                withEffectiveRange:range]) {
         color = item.rainbowColor;
-        *effectiveRange = NSMakeRange(range.location + rangeToColor.location, rangeToColor.length);
-
-        NSRange rangeBefore = NSMakeRange(range.location, rangeToColor.location);
-        if (rangeIsValid(rangeBefore)) {
-            [self fixSyntaxColoringInRange:rangeBefore];
-        }
-
-        NSRange rangeAfter = NSMakeRange(range.location + rangeToColor.location + rangeToColor.length,
-                                         range.length - rangeToColor.location - rangeToColor.length);
-        if (rangeIsValid(rangeAfter)) {
-            [self fixSyntaxColoringInRange:rangeAfter];
-        }
     }
 
     return color;
